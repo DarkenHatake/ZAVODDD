@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления заявками</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Панель управления заявками на ремонт</h1>
+
+    <div class="filters">
+        <select id="statusFilter">
+            <option value="all">Все статусы</option>
+            <option value="pending">В ожидании</option>
+            <option value="in_progress">В работе</option>
+            <option value="completed">Завершено</option>
+            <option value="cancelled">Отменено</option>
+        </select>
+
+        <select id="urgencyFilter">
+            <option value="all">Все уровни срочности</option>
+            <option value="low">Низкая</option>
+            <option value="medium">Средняя</option>
+            <option value="high">Высокая</option>
+            <option value="critical">Критическая</option>
+        </select>
+    </div>
+
+    <div class="requests-list">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Станок</th>
+                <th>Описание</th>
+                <th>Срочность</th>
+                <th>Статус</th>
+                <th>Дата создания</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody id="requestsTableBody">
+            <!-- Заявки будут загружены через JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

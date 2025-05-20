@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали заявки</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Детали заявки #<span id="requestNumber"></span></h1>
+
+    <div class="request-details">
+        <div class="detail">
+            <strong>Станок:</strong>
+            <span id="machineName"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Серийный номер:</strong>
+            <span id="serialNumber"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Описание проблемы:</strong>
+            <p id="issueDescription"></p>
+        </div>
+
+        <div class="detail">
+            <strong>Срочность:</strong>
+            <span id="urgencyLevel"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Статус:</strong>
+            <span id="requestStatus"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Контактное лицо:</strong>
+            <span id="contactName"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Телефон:</strong>
+            <span id="contactPhone"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Email:</strong>
+            <span id="contactEmail"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Дата создания:</strong>
+            <span id="createdAt"></span>
+        </div>
+
+        <div class="detail">
+            <strong>Последнее обновление:</strong>
+            <span id="updatedAt"></span>
+        </div>
+    </div>
+
+    <div class="status-update" id="statusUpdateSection">
+        <h2>Обновить статус</h2>
+        <select id="newStatus">
+            <option value="pending">В ожидании</option>
+            <option value="in_progress">В работе</option>
+            <option value="completed">Завершено</option>
+            <option value="cancelled">Отменено</option>
+        </select>
+        <button id="updateStatusBtn">Обновить</button>
+    </div>
+
+    <div class="back-link">
+        <a href="/dashboard">Вернуться к списку заявок</a>
+    </div>
+</div>
+
+<script src="/js/request-details.js"></script>
+</body>
+</html>
