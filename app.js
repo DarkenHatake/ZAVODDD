@@ -233,7 +233,57 @@ app.put('/api/requests/:id/status', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+// Получение деталей конкретной заявки
+app.get('/api/requests/:id', authenticate, async (req, res) => {
+    try {
+        const { rows } = await pool.query(
+            `SELECT r.*, u.username 
+             FROM repair_requests r
+             LEFT JOIN users u ON r.user_id = u.id
+             WHERE r.id = $1`,
+            [req.params.id]
+        );
 
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Заявка не найдена' });
+        }
+
+        // Проверяем права (админ или владелец заявки)
+        if (req.user.role !== 'admin' && req.user.id !== rows[0].user_id) {
+            return res.status(403).json({ error: 'Доступ запрещен' });
+        }
+
+        res.json(rows[0]);
+    } catch (error) {
+        console.error('Error fetching request details:', error);
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
+});
+
+// Обновление статуса заявки
+app.put('/api/requests/:id/status', authenticate, requireAdmin, async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!['pending', 'in_progress', 'completed', 'cancelled'].includes(status)) {
+        return res.status(400).json({ error: 'Недопустимый статус' });
+    }
+
+    try {
+        const { rows } = await pool.query(
+            `UPDATE repair_requests 
+             SET status = $1, updated_at = CURRENT_TIMESTAMP 
+             WHERE id = $2 
+             RETURNING *`,
+            [status, id]
+        );
+
+        res.json(rows[0]);
+    } catch (error) {
+        console.error('Error updating status:', error);
+        res.status(500).json({ error: 'Ошибка обновления статуса' });
+    }
+});
 // HTML маршруты
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
